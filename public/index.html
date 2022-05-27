@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Sistema de Recados</title>
+</head>
+
+<body>
+    <!-- DIV CONTAINER DE TUDO -->
+    <h2>Seja bem vindo!</h2>
+    <div class="container" id="container">
+
+        <!-- DIV CONTAINER DO FORMULARIO CADASTRO-->
+        <div class="form-container cadastro-container">
+            <form id="formulario-cadastro">
+                <h1>Criar uma conta</h1>
+                <span>Use seu e-mail para realizar seu cadastro</span>
+
+                <input type="text" placeholder="Nome Completo" id="input-cadastro-nome">
+                <input type="email" placeholder="E-mail" id="input-cadastro-email">
+                <input type="password" placeholder="Senha" id="input-cadastro-senha">
+
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+
+        <!-- DIV CONTAINER DO FORMULARIO LOGIN-->
+        <div class="form-container login-container">
+            <form id="formulario-login">
+                <h1>Login</h1>
+                <span>Use sua conta para acessar o sistema</span>
+
+                <input type="email" placeholder="E-mail" id="input-login-email">
+                <input type="password" placeholder="Senha" id="input-login-senha">
+
+                <a href="#">Esqueceu sua senha?</a>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+        <!-- DIV DO BACKGROUND BONITÃO - OVERLAY -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <!-- OVERLAY DIRETA -->
+                <div class="padrao-overlay overlay-direita">
+                    <h1>Olá, friend!</h1>
+                    <p>Cadastra-se utilizando seus dados pessoais e comece sua jornada conosco.</p>
+                    <button type="button" class="btn-transparente" id="btn-cadastrar">Criar uma Conta</button>
+                </div>
+
+                <!-- OVERLAY ESQUERDA -->
+                <div class="padrao-overlay overlay-esquerda">
+                    <h1>Bem vindo de volta!</h1>
+                    <p>Para se manter conectado faça login com suas informações pessoais</p>
+                    <button type="button" class="btn-transparente" id="btn-acessar">Acessar minha Conta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Criado por Turma 7a Edição Starter Full Stack &copy;<a href="http://www.growdev.com.br"
+                target="_blank">Growdev</a> - 2022</p>
+    </footer>
+
+
+    <script src="./dist/index.js"></script>
+</body>
+
+</html>
