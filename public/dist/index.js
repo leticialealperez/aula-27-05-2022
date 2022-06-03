@@ -15,9 +15,9 @@ let inputCadastroEmail = document.querySelector('#input-cadastro-email');
 let inputCadastroSenha = document.querySelector('#input-cadastro-senha');
 formularioCadastro.addEventListener('submit', (evento) => {
     evento.preventDefault();
-    verificaCampos();
+    verificaCamposCadastro();
 });
-function verificaCampos() {
+function verificaCamposCadastro() {
     if (inputCadastroNome.value === '' || inputCadastroNome.value.length < 3) {
         inputCadastroNome.focus();
         inputCadastroNome.setAttribute('style', 'outline-color: red');
@@ -45,7 +45,7 @@ function verificaCampos() {
     cadastrarUsuario(novoUsuario);
 }
 function cadastrarUsuario(novoUsuario) {
-    let listaUsuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    let listaUsuarios = buscarUsuariosNoStorage();
     let existe = listaUsuarios.some((usuario) => {
         return usuario.login === novoUsuario.login;
     });
@@ -53,6 +53,7 @@ function cadastrarUsuario(novoUsuario) {
         let confirma = confirm("Este e-mail já está cadastrado. Deseja ir para a página de login?");
         if (confirma) {
             container.classList.remove('painel-direito-ativo');
+            formularioCadastro.reset();
         }
         return;
     }
@@ -63,4 +64,46 @@ function cadastrarUsuario(novoUsuario) {
     setTimeout(() => {
         container.classList.remove('painel-direito-ativo');
     }, 1000);
+}
+function buscarUsuariosNoStorage() {
+    return JSON.parse(localStorage.getItem('usuarios') || '[]');
+}
+// LOGAR O USUARIO NA APLICAÇÃO 
+let formularioLogin = document.querySelector('#formulario-login');
+let inputLoginEmail = document.querySelector('#input-login-email');
+let inputLoginSenha = document.querySelector('#input-login-senha');
+formularioLogin.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+    validarCamposLogin();
+});
+function validarCamposLogin() {
+    if (inputLoginEmail.value === '') {
+        inputLoginEmail.focus();
+        inputLoginEmail.setAttribute('style', 'outline-color: red');
+        return;
+    }
+    if (inputLoginSenha.value === '') {
+        inputLoginSenha.focus();
+        inputLoginSenha.setAttribute('style', 'outline-color: red');
+        return;
+    }
+    inputLoginEmail.removeAttribute('style');
+    inputCadastroSenha.removeAttribute('style');
+    let usuarioLogando = {
+        login: inputLoginEmail.value,
+        senha: inputLoginSenha.value
+    };
+    logarNoSistema(usuarioLogando);
+}
+function logarNoSistema(usuarioLogando) {
+    let listaUsuarios = buscarUsuariosNoStorage();
+    let existe = listaUsuarios.some((usuario) => {
+        return usuario.login === usuarioLogando.login && usuario.senha === usuarioLogando.senha;
+    });
+    if (!existe) {
+        alert("E-mail ou senha incorretos!");
+        return;
+    }
+    sessionStorage.setItem('usuarioLogado', inputLoginEmail.value);
+    window.location.href = 'public/home.html';
 }

@@ -28,10 +28,10 @@ interface Usuario {
 formularioCadastro.addEventListener('submit', (evento) => {
     evento.preventDefault();
 
-    verificaCampos();
+    verificaCamposCadastro();
 });
 
-function verificaCampos(): void {
+function verificaCamposCadastro(): void {
 
     if (inputCadastroNome.value === '' || inputCadastroNome.value.length < 3) {
         inputCadastroNome.focus();
@@ -66,7 +66,7 @@ function verificaCampos(): void {
 }
 
 function cadastrarUsuario(novoUsuario: Usuario) {
-    let listaUsuarios: Array<Usuario> = buscarUsuariosNoStorage();
+    let listaUsuarios: Usuario[] = buscarUsuariosNoStorage();
 
     let existe: boolean = listaUsuarios.some((usuario) => {
         return usuario.login === novoUsuario.login
@@ -94,9 +94,58 @@ function cadastrarUsuario(novoUsuario: Usuario) {
 
 }
 
-function buscarUsuariosNoStorage() {
+function buscarUsuariosNoStorage(): Usuario[] {
 
     return JSON.parse(localStorage.getItem('usuarios') || '[]');
 }
 
 // LOGAR O USUARIO NA APLICAÇÃO 
+let formularioLogin = document.querySelector('#formulario-login') as HTMLFormElement;
+let inputLoginEmail = document.querySelector('#input-login-email') as HTMLInputElement;
+let inputLoginSenha = document.querySelector('#input-login-senha') as HTMLInputElement;
+
+formularioLogin.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    validarCamposLogin();
+});
+
+function validarCamposLogin() {
+    if (inputLoginEmail.value === '') {
+        inputLoginEmail.focus();
+        inputLoginEmail.setAttribute('style', 'outline-color: red');
+        return
+    }
+
+    if (inputLoginSenha.value === '') {
+        inputLoginSenha.focus();
+        inputLoginSenha.setAttribute('style', 'outline-color: red');
+        return
+    }
+
+    inputLoginEmail.removeAttribute('style');
+    inputCadastroSenha.removeAttribute('style');
+
+    let usuarioLogando = {
+        login: inputLoginEmail.value,
+        senha: inputLoginSenha.value
+    }
+
+    logarNoSistema(usuarioLogando);
+}
+
+function logarNoSistema(usuarioLogando: any) {
+    let listaUsuarios: Usuario[] = buscarUsuariosNoStorage();
+
+    let existe: boolean = listaUsuarios.some((usuario) => {
+        return usuario.login === usuarioLogando.login && usuario.senha === usuarioLogando.senha
+    });
+
+    if (!existe) {
+        alert("E-mail ou senha incorretos!");
+        return
+    }
+
+    sessionStorage.setItem('usuarioLogado', inputLoginEmail.value);
+    window.location.href = 'public/home.html';
+}

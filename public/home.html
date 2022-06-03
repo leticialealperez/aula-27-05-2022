@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Deu bom! 🎉✔</h1>
+
+    <script>
+
+        //TUDO ISSO QUE TA AQUI É JS
+        document.addEventListener('DOMContentLoaded', () => {
+            let usuarioLogado = sessionStorage.getItem('usuarioLogado');
+
+            if (!usuarioLogado) {
+                alert("Você precisa estar logado para acessar essa página!");
+                window.location.href = '../index.html';
+                return
+            }
+
+            let listaUsuarios = JSON.parse(localStorage.getItem('usuarios'));
+            let indiceUsuarioLogado = listaUsuarios.findIndex((usuario) => {
+                return usuario.login === usuarioLogado
+            });
+
+            let dadosUsuarioLogado = listaUsuarios[indiceUsuarioLogado];
+
+            console.log(indiceUsuarioLogado);
+            console.log(listaUsuarios[indiceUsuarioLogado]);
+
+        });
+    </script>
+</body>
+
+</html>
