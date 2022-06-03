@@ -10,3 +10,4 @@ btnAcessar.addEventListener('click', () => {
 btnCadastrar.addEventListener('click', () => {
     container.classList.add('painel-direito-ativo');
 });
+
